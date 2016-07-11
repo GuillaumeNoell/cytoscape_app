@@ -1,0 +1,25 @@
+{
+  "name": "cytoscape_app",
+  "private": true,
+  "scripts": {
+    "start": "meteor run"
+  },
+  "dependencies": {
+    "coffee-script": "^1.10.0",
+    "coffeescript": "^99.999.99999",
+    "cytoscape": "^2.7.4",
+    "gulp": "^3.9.1",
+    "meteor-node-stubs": "^0.2.3",
+    "react": "^15.2.0",
+    "react-addons-create-fragment": "^15.2.0",
+    "react-addons-css-transition-group": "^15.2.0",
+    "react-addons-linked-state-mixin": "^15.2.0",
+    "react-addons-perf": "^15.2.0",
+    "react-addons-pure-render-mixin": "^15.2.0",
+    "react-addons-test-utils": "^15.2.0",
+    "react-addons-transition-group": "^15.2.0",
+    "react-addons-update": "^15.2.0",
+    "react-dom": "^15.2.0",
+    "react-foundation": "^0.6.8"
+  }
+}
