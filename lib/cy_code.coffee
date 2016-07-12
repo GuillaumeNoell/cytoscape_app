@@ -1,3 +1,15 @@
+
+Meteor.cy_nodes = [
+    { data: { id: 'i', name: 'iname' } }
+    { data: { id: 'j', name: 'Jerry' } }
+    { data: { id: 'g', name: 'George' } }
+]
+
+Meteor.cy_edges = [
+    { data: { id: 'ji', source: 'j', target: 'i' } }
+    { data: { id: 'gj', source: 'g', target: 'j' } }
+]
+  
 Meteor.cyMount = () ->
   Meteor.cy = Meteor.cytoscape(
     container: document.getElementById('cy')
@@ -17,24 +29,8 @@ Meteor.cyMount = () ->
           'target-arrow-shape': 'triangle'
       }
       ]
-    elements: [
-      { data: id: 'a' }
-      { data: id: 'b' }
-      { data: id: 'c' }
-      { data: id: 'd' }
-      { data: id: 'e' }
-      { data:
-        id: 'ab'
-        source: 'a'
-        target: 'b' }
-      { data:
-        id: 'cd'
-        source: 'c'
-        target: 'd' }
-      { data:
-        id: 'ed'
-        source: 'e'
-        target: 'd' }
-      ]
+    elements:
+      nodes: Meteor.cy_nodes
+      edges: Meteor.cy_edges
     layout:
       name: 'cose')
