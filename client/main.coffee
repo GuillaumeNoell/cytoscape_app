@@ -3,7 +3,7 @@ Meteor.startup ->
   Meteor.cytoscape = require 'cytoscape'
 
   { div, h1, p, a } = React.DOM
-  
+
   `import Foundation from 'react-foundation'`
   @Badge = React.createFactory Foundation.Badge
   @Button = React.createFactory Foundation.Button
@@ -33,16 +33,24 @@ Meteor.startup ->
   @App = Component.create
     getInitialState: ->
       color: 'red'
-  
+
     getDefaultProps: ->
       back_color: '#d3d3d3'
-  
-    onDrop_edges: (edge_file) ->
-      console.log 'Received Edge file: ', edge_file
+
+    onDrop_edges: (edgeFile) ->
+      console.log 'Received Edge file: ', edgeFile
+      xhr = new XMLHttpRequest()
+      xhr.open 'POST','/', true
+      xhr.onload = (event) =>
+        console.log 'done uploading!'
+      xhr.upload.onprogress = (event) =>
+        percent = 100 * (event.loaded / event.total)
+        console.log percent+'% uploaded'
+      xhr.send(edgeFile)
       return true
-  
-    onDrop_nodes: (edge_file) ->
-      console.log 'Received Node file: ', edge_file
+
+    onDrop_nodes: (nodeFile) ->
+      console.log 'Received Node file: ', nodeFile
       return true
 
     onClickEvent: () ->
@@ -50,7 +58,7 @@ Meteor.startup ->
 
     onClickEvent1: () ->
         @setState color: 'green'
-  
+
     componentDidMount: () ->
       Meteor.cyMount()
       Meteor.cy.on 'tap', (evt) =>
@@ -65,13 +73,13 @@ Meteor.startup ->
           div {className:'expanded row',style:{'minHeight':'100vh'}},
             div {className:'large-2 columns',style:{'minHeight':'100vh','backgroundColor':'#252525'}},
               Button {onClick:() => @onClickEvent()},'change topbar text color'
-              Dropzone {multiple:false, style:dropzone_style, onDrop:() => @onDrop_edges()},
+              Dropzone {multiple:false, style:dropzone_style, onDrop: (edgeFile) => @onDrop_edges(edgeFile)},
                 div {}, 'Drop edge file here (comma-separated table, .csv or .txt)'
-              Dropzone {multiple:false, style:dropzone_style, onDrop:() => @onDrop_nodes()},
+              Dropzone {multiple:false, style:dropzone_style, onDrop:(nodeFile) => @onDrop_nodes(nodeFile)},
                 div {}, 'Drop node file here (comma-separated table, .csv or .txt)'
             div {className:'large-10 columns',style:{'minHeight':'100vh'}},
               div {id:'cy',style:{'minHeight':'92vh'}}
-          
+
           #Badge {color:'info'},'badge'
           #Label {color:'success'},'label'
 
@@ -80,5 +88,3 @@ Meteor.startup ->
     App({}),
     document.getElementById 'app'
   )
-  
-
